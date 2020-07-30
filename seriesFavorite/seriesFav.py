@@ -1,7 +1,11 @@
 import os, shelve, requests, webbrowser, bs4, re
+from tkinter import *
+from PIL import ImageTk, Image
+
+#window = Tk()
 
 # Change the folder of saving
-os.chdir('C:\\Users\\Cristian\\MyPythonScripts\\seriesFavorite')
+os.chdir('seriesFavorite')
 
 class Movie:
     """Look up for favorite serials :)
@@ -91,8 +95,8 @@ class Movie:
 
     def create(self):
         try:
-            serial = int(input("Pune numarul serialului la care ai ramas de vazut \n(0 - daca nu are seriale): "))
-            episode = int(input("Pune numarul episodului la care ai ramas de vazut: "))
+            serial = int(input("{}- Pune numarul serialului la care ai ramas de vazut \n(0 - daca nu are seriale): ".format(self.title)))
+            episode = int(input("{}- Pune numarul episodului la care ai ramas de vazut: ".format(self.title)))
         except:
             raise Exception("Doar numere intregi!")
         return [serial, episode]
@@ -104,11 +108,17 @@ class Movie:
         # iau titlu din title, si adaug un atribut de nr. deschise -> fac automat la update
         pass
 
-    def ui(): # user interface
-        pass
+    @staticmethod
+    def ui(window): # user interface
+        Movie.window = window
+        Movie.window.wm_title(" Filme noi:")
+        Movie.window.iconbitmap('img/movie.ico')
+        Movie.window.geometry('400x300')
+
 
     def __del__(self):
         self.shelvF.close()
+        window
 
 if __name__ == '__main__':
     Boruto = Movie('Boruto',
@@ -128,6 +138,10 @@ if __name__ == '__main__':
     '#content > ul.listing-videos.listing-tube > li a',
     'https://divxfilmeonline.org/seriale-online/supergirl/supergirl-sezonul-'])
 
-    movies = [Boruto, Flash, SuperGirl]
+    window = Tk()
+    Boruto.ui(window)
+    window.mainloop()
+
+    """movies = [Boruto, Flash, SuperGirl]
     for item in movies:
-        print(item.links, item.num)
+        print(item.links, item.num)"""
