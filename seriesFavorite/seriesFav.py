@@ -112,7 +112,7 @@ class Movie:
     def ui(window): # user interface
         Movie.window = window
         Movie.window.wm_title(" Filme noi:")
-        Movie.window.iconbitmap('img/movie.ico')
+        Movie.window.iconbitmap('img/movies.ico')
         Movie.window.geometry('400x300')
 
 
