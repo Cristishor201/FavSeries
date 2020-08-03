@@ -5,7 +5,7 @@ from PIL import ImageTk, Image
 #window = Tk()
 
 # Change the folder of saving
-os.chdir('seriesFavorite')
+#os.chdir('seriesFavorite')
 
 class Movie:
     """Look up for favorite serials :)
@@ -101,20 +101,44 @@ class Movie:
             raise Exception("Doar numere intregi!")
         return [serial, episode]
 
-    def open(): # open selected movie
-        pass
+    @classmethod
+    def opening(): # open selected movie
+        slider1 = Movie.slider1.get()
+        print(slider1)
 
     def update(self):
         # iau titlu din title, si adaug un atribut de nr. deschise -> fac automat la update
         pass
 
     @staticmethod
-    def ui(window): # user interface
+    def ui(window, movies): # user interface
         Movie.window = window
         Movie.window.wm_title(" Filme noi:")
         Movie.window.iconbitmap('img/movies.ico')
-        Movie.window.geometry('400x300')
+        Movie.window.geometry('370x200')
 
+        Label1 = Label(window, text=movies[0].title, font=("Helvetica", 13))
+        Label2 = Label(window, text=movies[1].title, font=("Helvetica", 13))
+        Label3 = Label(window, text=movies[2].title, font=("Helvetica", 13))
+
+        Movie.Slider1 = Scale(window, from_=0, to=movies[0].num, orient=HORIZONTAL, length=250, state=["disabled" if movies[0].num == 0 else "active"])
+        Movie.Slider2 = Scale(window, from_=0, to=movies[1].num, orient=HORIZONTAL, length=250, state=["disabled" if movies[1].num == 0 else "active"])
+        Movie.Slider3 = Scale(window, from_=0, to=movies[2].num, orient=HORIZONTAL, length=250, state=["disabled" if movies[2].num == 0 else "active"])
+        Movie.Slider1.set(movies[0].num)
+        Movie.Slider2.set(movies[1].num)
+        Movie.Slider3.set(movies[2].num)
+
+        Button1 = Button(window, text="CLOSE", width=6, command=window.destroy)
+        Button2 = Button(window, text="OPEN", width=7, command=Movie.opening)
+
+        Label1.grid(row=0, column=0, pady=(10,0), padx=(8,8))
+        Label2.grid(row=1, column=0, pady=(10,0), padx=(8,8))
+        Label3.grid(row=2, column=0, pady=(10,0), padx=(8,8))
+        Movie.Slider1.grid(row=0, column=1, columnspan=3, pady=(0,5))
+        Movie.Slider2.grid(row=1, column=1, columnspan=3, pady=(0,5))
+        Movie.Slider3.grid(row=2, column=1, columnspan=3, pady=(0,5))
+        Button1.grid(row=3, column=0, padx=(10,0), pady=15)
+        Button2.grid(row=3, column=3, padx=(0,5), pady=15)
 
     def __del__(self):
         self.shelvF.close()
@@ -137,9 +161,10 @@ if __name__ == '__main__':
     ['ul.listing-cat span',
     '#content > ul.listing-videos.listing-tube > li a',
     'https://divxfilmeonline.org/seriale-online/supergirl/supergirl-sezonul-'])
+    videos=[Boruto, Flash, SuperGirl]
 
     window = Tk()
-    Boruto.ui(window)
+    Boruto.ui(window, videos)
     window.mainloop()
 
     """movies = [Boruto, Flash, SuperGirl]
