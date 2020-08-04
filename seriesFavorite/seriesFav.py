@@ -101,8 +101,8 @@ class Movie:
             raise Exception("Doar numere intregi!")
         return [serial, episode]
 
-    @classmethod
-    def opening(): # open selected movie
+    #@classmethod
+    def opening(Movie): # open selected movie
         slider1 = Movie.slider1.get()
         print(slider1)
 
@@ -128,8 +128,8 @@ class Movie:
         Movie.Slider2.set(movies[1].num)
         Movie.Slider3.set(movies[2].num)
 
-        Button1 = Button(window, text="CLOSE", width=6, command=window.destroy)
-        Button2 = Button(window, text="OPEN", width=7, command=Movie.opening)
+        Movie.Button1 = Button(window, text="CLOSE", width=6, command=window.destroy)
+        Movie.Button2 = Button(window, text="OPEN", width=7, command=Movie.opening)
 
         Label1.grid(row=0, column=0, pady=(10,0), padx=(8,8))
         Label2.grid(row=1, column=0, pady=(10,0), padx=(8,8))
@@ -137,8 +137,8 @@ class Movie:
         Movie.Slider1.grid(row=0, column=1, columnspan=3, pady=(0,5))
         Movie.Slider2.grid(row=1, column=1, columnspan=3, pady=(0,5))
         Movie.Slider3.grid(row=2, column=1, columnspan=3, pady=(0,5))
-        Button1.grid(row=3, column=0, padx=(10,0), pady=15)
-        Button2.grid(row=3, column=3, padx=(0,5), pady=15)
+        Movie.Button1.grid(row=3, column=0, padx=(10,0), pady=15)
+        Movie.Button2.grid(row=3, column=3, padx=(0,5), pady=15)
 
     def __del__(self):
         self.shelvF.close()
