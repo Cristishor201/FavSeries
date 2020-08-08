@@ -150,6 +150,8 @@ class UI:
 
     def opening(self): # open selected movie
         s = [self.Slider1.get(), self.Slider2.get(), self.Slider3.get()]
+        if s == [0, 0, 0]:
+            return False
         window.destroy()
         for i in range(len(self.movies)):
             for j in range(s[i]):
