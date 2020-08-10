@@ -1,12 +1,6 @@
 import os, shelve, requests, webbrowser, bs4, re, time, pyautogui
 from tkinter import *
 
-
-#window = Tk()
-
-# Change the folder of saving
-#os.chdir('seriesFavorite')
-
 class Movie:
     """Look up for favorite serials :)
     ====================================

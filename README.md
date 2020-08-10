@@ -9,20 +9,17 @@ How would it be if you would not check manually, if it appeared a new episode or
 
 ## Screenshots
 
-In **Screenshot 1** -> open _a_ new unseen episode from Flash, from _106_ new current episodes appeared.  
+In **Screenshot 1** you can select easily how many new episodes want to see from each movie.  
 ![image](ScreenShoot-1.PNG "ScreenShoot 1")
 
-In **Screenshot 2** -> open _2_ new unseen episodes, both in new tabs, from _105_ curent  new episodes.  
+In **Screenshot 2** you are prompted if you want to update where you have left of watching movies. This is usefull for testing or debuging.  
 ![image](ScreenShoot-2.PNG "ScreenShoot 2")
-
-More explanation in this video from bellow. It's the best I can get without showing my entire desktop.  
-![image](Video-gif.gif "Video")
 
 ## Tech/framework used
 
 **Built with**
 
-   * [Python](https://docs.python.org/3/) ( verssion 3.7.2) running on Windows 7, 64 bit
+   * [Python](https://docs.python.org/3/) ( verssion 3.8.3) running on Windows 7, 64 bit
 
 **Modules used**
    * *os* ......................... -> changing the curent folder of saving shelves dictionary variables
@@ -31,6 +28,8 @@ More explanation in this video from bellow. It's the best I can get without show
    * *webbrowser*  ..... -> open webpage
    * *beautifulSoup4* -> parse html
    * *re* ......................... -> take the link for each episode
+   * *time* ......................... -> open episodes in order
+   * *pyautogui* ................ -> checking for update
 
 ## Prerequisites
 
@@ -50,12 +49,6 @@ pip install beautifulsoup4
 
    1. Put the folder in your name documents or where ever you want  
 Make sure you have `seriesFavorite.py` in the same folder as `series.dat`, `series.bak`, and `series.dir`.
-
-   2. Rename your path on line 7, in the `seriesFavorite.py`  
-Rename it with your current path.  
-```
-os.chdir('C:\\Users\\Cristian\\MyPythonScripts\\seriesFavorite')
-```
 
 ## Obtional
 
@@ -131,7 +124,7 @@ Pull requests are welcome. If you need to see other movies or series, or if you 
 Note that requests for xxx movies aren't taken into account, at all. Also minor changes.
 
 ## Author
-  * Cristian Florescu  - [Cristishor201](https://github.com/Cristishor201) 
+  * Cristian Florescu  - [Cristishor201](https://github.com/Cristishor201)
 
 ## License
 
