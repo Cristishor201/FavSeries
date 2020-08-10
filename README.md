@@ -65,7 +65,7 @@ Make sure you put your path till seriesFavorite.py program.
 @pause
 ```
 
-  3. Save the file as ***.bat** ( from batman :) ). I saved `startUp.bat`
+  3. Save the file as **.bat** ( from batman :) ). I saved `startUp.bat`
 
   4. On widows : in `start \ search bar`, type this :
 ```shell:startup```

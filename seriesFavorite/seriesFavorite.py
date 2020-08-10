@@ -1,6 +1,9 @@
 import os, shelve, requests, webbrowser, bs4, re, time, pyautogui
 from tkinter import *
 
+# Change the folder of saving
+os.chdir('C:/Users/Cristian/Documents/GitHub/FavSeries/seriesFavorite')
+
 class Movie:
     """Look up for favorite serials :)
     ====================================
@@ -151,7 +154,7 @@ class UI:
             for j in range(s[i]):
                 webbrowser.open(self.movies[i].links[j], new=0) # open how many movies I want to see once
                 time.sleep(1)
-        answer = pyautogui.confirm(title="Update movies", text="Do you want to update opened movies ?", buttons=['OK', 'Cancel'])
+        answer = pyautogui.confirm(title="Update movies", text="Do you want to update opened movies ?", buttons=['YES', 'No'])
         if answer == 'OK':
             for item, num in zip(self.movies, s):
                 item.update(num)
