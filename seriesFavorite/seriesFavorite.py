@@ -1,7 +1,11 @@
-import os, shelve, requests, webbrowser, bs4, re, time, pyautogui
+import os, shelve, requests, webbrowser, bs4, re, time, pyautogui, logging
 from tkinter import *
 
 # Change the folder of saving
+#os.chdir("C:/Users/Cristian/MyPythonScripts/seriesFavorite") #usefull for running from batch
+
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.disable(logging.CRITICAL)
 
 class Movie:
     """Look up for favorite serials :)
@@ -21,10 +25,12 @@ class Movie:
         self.title = title
         self.shelvF = shelve.open('series')
         if self.title in list(self.shelvF.keys()):
-            self.seasonIn, self.episodeIn = self.shelvF[title]
+            self.seasonIn, self.episodeIn = self.shelvF[self.title]
         else:
             self.seasonIn, self.episodeIn = self.create()
+            logging.error("1", self.seasonIn, self.episodeIn)
             self.shelvF[title] = [self.seasonIn, self.episodeIn]
+            logging.error("2", self.shelvF[title])
 
         if self.seasonIn != 0:
             # link sesons -> take seasonMax
@@ -97,7 +103,9 @@ class Movie:
         return [serial, episode]
 
     def update(self, opened):
+        logging.info("4", opened)
         if self.seasonIn != 0:
+            logging.warning("5", self.episodeIn)
             if self.episodeIn + opened > 23:
                 self.seasonIn += int((self.episodeIn + opened)/23)
                 self.episodeIn = (self.episodeIn + opened) % 23
@@ -105,6 +113,7 @@ class Movie:
                 self.episodeIn = self.episodeIn + opened
         else:
             self.episodeIn = self.episodeIn + opened
+        logging.critical("6", self.seasonIn, self.episodeIn)
         self.shelvF[self.title] = [self.seasonIn, self.episodeIn]
 
     def __del__(self):
@@ -154,8 +163,9 @@ class UI:
                 webbrowser.open(self.movies[i].links[j], new=0) # open how many movies I want to see once
                 time.sleep(1)
         answer = pyautogui.confirm(title="Update movies", text="Do you want to update opened movies ?", buttons=['YES', 'No'])
-        if answer == 'OK':
+        if answer == 'YES':
             for item, num in zip(self.movies, s):
+                logging.info("3", item, num)
                 item.update(num)
         else:
             pass
