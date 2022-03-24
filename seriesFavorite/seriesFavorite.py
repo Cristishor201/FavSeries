@@ -153,52 +153,66 @@ class UI:
         window.iconbitmap('img/movies.ico')
         window.geometry('370x220')
 
-        frame1 = Frame(window, width=370)
-        frame2= Frame(window, height=50)
+        master_frame = Frame(window)
+        master_frame.grid(sticky=NSEW)
+        master_frame.columnconfigure(0, weight=1)
+        ROWS, COLS = len(movies), 4
+        ROWS_DISP = 3
+        COLS_DISP = 4
 
-        window.grid_rowconfigure(0, weight=3)
-        window.grid_rowconfigure(1, weight=1)
-        frame2.grid_columnconfigure(1, weight=1)
+        frame1 = Frame(master_frame)
+        frame2 = Frame(master_frame)
+        frame2.columnconfigure(1, weight=1)
 
-        frame1.grid(row=0, sticky="nsew")
-        frame2.grid(row=1, sticky="nsew")
+        master_frame.rowconfigure(0, weight=2)
+        master_frame.rowconfigure(1, weight=1)
 
-        #scroll
-        mycanvas = Canvas(frame1, bg="blue")
-        mycanvas.grid_rowconfigure(0, weight=1)
-        mycanvas.grid(row=0, column=0, sticky="nsew")
+        frame1.grid(row=0, column=0, sticky=NSEW)
+        frame2.grid(row=1, column=0, sticky=NSEW)
+
+        mycanvas = Canvas(frame1)
+        mycanvas.grid(row=0, column=0)
 
         myScrollBar = Scrollbar(frame1, orient=VERTICAL, command=mycanvas.yview)
-        myScrollBar.grid(row= 0, column= 0)
 
         mycanvas.configure(yscrollcommand=myScrollBar.set)
-        mycanvas.bind('<Configure>', lambda e: mycanvas.configure(scrollregion=mycanvas.bbox("all")))
 
-        frame_scrollable = Frame(mycanvas)
+        content_frame = Frame(mycanvas)
 
-        mycanvas.create_window((0,0), window=frame_scrollable, anchor="nw")
+        """
+        for i in range(10):
+            label1 = Label(content_frame, text='Frame{}'.format(i))
+            label1.grid(row=i, column=0, pady=5, sticky=NW)
 
-        if len(movies) > 3:
-            print("scroll")
-            #main_window(window) #schimb self.window
-        else:
-            print("normal")
+        label1 = Label(frame2, text='Frame2')
+        label1.grid(row=0, column=0, pady=5, sticky=NW)"""
 
         for i in range(len(movies)):
-            Labelt = Label(frame_scrollable, text=movies[i].title, font=("Helvetica", 13))
+            Labelt = Label(content_frame, text=movies[i].title, font=("Helvetica", 13))
             Labelt.grid(row=i, column=0, pady=(10,0), padx=(8,8))
 
-            Slider = Scale(frame_scrollable, from_=0, to=movies[i].num, orient=HORIZONTAL, length=250, state=["disabled" if movies[i].num == 0 else "active"])
+            Slider = Scale(content_frame, from_=0, to=movies[i].num, orient=HORIZONTAL, length=250, state=["disabled" if movies[i].num == 0 else "active"])
             Slider.set(movies[i].num)
-            Slider.grid(row=i, column=1, columnspan=3, pady=(0,5))
+            Slider.grid(row=i, column=1, columnspan=3, pady=(0,5), padx=(0,5))
             self.sliders.append(Slider)
 
         Button1 = Button(frame2, text="CLOSE", width=6, command=window.destroy)
         Button2 = Button(frame2, text="OPEN", width=7, command=self.opening)
 
-        Button1.grid(row=0, column=0, padx=(25,0), pady=15, sticky="w")
-        Button2.grid(row=0, column=3, padx=(0,35), pady=15, sticky="e")
-        
+        Button1.grid(row=0, column=0, padx=(25,0), pady=15, sticky=W)
+        Button2.grid(row=0, column=1, padx=(0,35), pady=15, sticky=E)
+
+        mycanvas.create_window((0,0), window=content_frame, anchor=NW)
+        content_frame.update_idletasks() # Needed to make bbox info available.
+        bbox = mycanvas.bbox(ALL) # Get bounding box of canvas with Buttons
+
+        if len(movies) > 3:
+            myScrollBar.grid(row=0, column=1, sticky=NS)
+            #define scrollregion
+            w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
+            dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
+            mycanvas.configure(scrollregion=bbox, width=dw, height=dh)
+
     def opening(self): ######### open selected movie
         s = [] # values with selected in sliders
         count = 0
