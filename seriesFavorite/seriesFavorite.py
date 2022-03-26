@@ -151,26 +151,33 @@ class UI:
 
         window.wm_title(" Filme noi:")
         window.iconbitmap('img/movies.ico')
-        window.geometry('370x220')
+        #window.geometry('370x220')
+        Grid.rowconfigure(window, index=0, weight=1)
+        Grid.columnconfigure(window, index=0, weight=1)
 
         master_frame = Frame(window)
+        Grid.columnconfigure(master_frame, index=0, weight=1)
         master_frame.grid(sticky=NSEW)
-        master_frame.columnconfigure(0, weight=1)
+
         ROWS, COLS = len(movies), 4
         ROWS_DISP = 3
         COLS_DISP = 4
 
         frame1 = Frame(master_frame)
         frame2 = Frame(master_frame)
-        frame2.columnconfigure(1, weight=1)
+        Grid.columnconfigure(frame2, index=1, weight=1)
 
-        master_frame.rowconfigure(0, weight=2)
-        master_frame.rowconfigure(1, weight=1)
+        Grid.rowconfigure(frame1, index=0, weight=1)
+        Grid.columnconfigure(frame1, index=0, weight=1)
+        Grid.rowconfigure(master_frame, index=0, weight=2)
+        Grid.rowconfigure(master_frame, index=1, weight=1)
 
         frame1.grid(row=0, column=0, sticky=NSEW)
         frame2.grid(row=1, column=0, sticky=NSEW)
 
         mycanvas = Canvas(frame1)
+        Grid.rowconfigure(mycanvas, index=0, weight=1)
+        Grid.columnconfigure(mycanvas, index=0, weight=1)
         mycanvas.grid(row=0, column=0)
 
         myScrollBar = Scrollbar(frame1, orient=VERTICAL, command=mycanvas.yview)
@@ -178,21 +185,19 @@ class UI:
         mycanvas.configure(yscrollcommand=myScrollBar.set)
 
         content_frame = Frame(mycanvas)
-
-        """
-        for i in range(10):
-            label1 = Label(content_frame, text='Frame{}'.format(i))
-            label1.grid(row=i, column=0, pady=5, sticky=NW)
-
-        label1 = Label(frame2, text='Frame2')
-        label1.grid(row=0, column=0, pady=5, sticky=NW)"""
+        Grid.rowconfigure(content_frame, index=0, weight=1)
+        Grid.columnconfigure(content_frame, index=0, weight=1)
 
         for i in range(len(movies)):
             Labelt = Label(content_frame, text=movies[i].title, font=("Helvetica", 13))
+            Grid.rowconfigure(Labelt, index=0, weight=1)
+            Grid.columnconfigure(Labelt, index=0, weight=1)
             Labelt.grid(row=i, column=0, pady=(10,0), padx=(8,8))
 
             Slider = Scale(content_frame, from_=0, to=movies[i].num, orient=HORIZONTAL, length=250, state=["disabled" if movies[i].num == 0 else "active"])
             Slider.set(movies[i].num)
+            Grid.rowconfigure(Slider, index=0, weight=1)
+            Grid.columnconfigure(Slider, index=0, weight=1)
             Slider.grid(row=i, column=1, columnspan=3, pady=(0,5), padx=(0,5))
             self.sliders.append(Slider)
 
