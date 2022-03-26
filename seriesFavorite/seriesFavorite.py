@@ -179,13 +179,6 @@ class UI:
 
         content_frame = Frame(mycanvas)
 
-        """
-        for i in range(10):
-            label1 = Label(content_frame, text='Frame{}'.format(i))
-            label1.grid(row=i, column=0, pady=5, sticky=NW)
-
-        label1 = Label(frame2, text='Frame2')
-        label1.grid(row=0, column=0, pady=5, sticky=NW)"""
 
         for i in range(len(movies)):
             Labelt = Label(content_frame, text=movies[i].title, font=("Helvetica", 13))
